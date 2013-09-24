@@ -1,0 +1,27 @@
+
+The Algorithm for critical section of  bakery problem:
+
+Requesting the critical section. 
+
+1.When a customer c1
+wants to enter the CS, it sends REQUEST(tsi, i) message to 
+all the customers in its request set Ri and places the request on  request_queue i (tsi is the timestamp of the request). 
+2.When a customer c2 receives the REQUEST(tsi, i) message from customer c1 
+, it returns a timestamped REPLY message to c1 and places site 
+customers s request on request_queue .
+
+Executing the critical section. 
+
+1.customer c1 enters the CS when the two following conditions hold: 
+a)c1 has received a message with timestamp larger than 
+(tsi, i) from all other customers
+b) c’ is request is at the top request_queue to 
+
+Releasing the critical section.
+
+1.customer c1, upon exiting the CS, removes its request from the top of its request 
+queue and sends a timestamped  RELEASE message to all the customers in its 
+request set. 
+ 2.When a customer c2  receives a RELEASE message from customer c1, it re-moves c'is request from its request queue. 
+When a customer removes a request from its request queue, its own request may come at the top of the queue, enabling it to enter CS. The algorithm executes CS requests in the increasing order of timestamp.
+
