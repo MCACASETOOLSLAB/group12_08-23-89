@@ -1,0 +1,69 @@
+/*implementation of bakery algorithm*/
+/*baker serving the customer is equivalent to single cpu executing processes*/
+/*customers are the threads*/
+#include<stdio.h>
+#include<conio.h>
+#include<dos.h>
+static int S=1;
+static int total=0;
+static int SEMA=0;//semaphore variable
+int wait(int x)
+{
+    while(x<=0)
+    ;
+    return --x;
+}
+int signal(int x)
+{
+    return ++x;
+}
+int main()
+{
+    int i,j,count;
+    while(1)
+    {
+            printf("\noptions:");
+            printf("\n1.enter customer");
+            printf("\n2.display current customer");
+            printf("\n3.customers waiting");
+            printf("\n4.serve current customer");
+            printf("\n5.exit\n enter ur option:");
+            scanf("%d",&count);
+            
+            switch(count)
+            {
+                         case 1:
+                              total++;
+                              printf("\n\ncustomer enters");
+                              printf("\ncustomer %d given no.%d",total,total);
+                              break;
+                         case 2:
+                              printf("\n\ncustomer %d turn",S);
+                              break;
+                         case 3:
+                              printf("\n\nBUSY WAITING\n");
+                              printf("----**************------\n");
+                              printf("\n\nwaiting customers:-\n");
+                              if(S>=total){
+                                 printf("\nno customers waiting");
+                                 break;}
+                              for(j=S;j<=total;j++)
+                                  printf("\ncustomer %d waiting",j);
+                              break;
+                         case 4:
+                              SEMA=wait(SEMA);//SEMAPHORE
+                              printf("\n\ncustomer %d in CRITICAL SECTION\n",S);
+                              printf("----**************------\n");
+                              printf("\n\nserving customer %d",S);
+                              for(i=0;i<500;i++);
+                              printf("\ncustomer %d served",S);
+                              S++;
+                              SEMA=signal(SEMA);
+                              break;
+                         default:
+                              exit(1);   
+            }
+    }
+    getch();
+    return 1;
+}
